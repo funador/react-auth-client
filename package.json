@@ -1,0 +1,19 @@
+{
+  "name": "social-auth-client",
+  "version": "0.0.1",
+  "dependencies": {
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "react-fontawesome": "^1.6.1",
+    "react-scripts": "1.1.4",
+    "socket.io-client": "^2.1.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "dev": "HTTPS=true react-scripts start",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "deploy": "npm run build && netlify deploy"
+  }
+}
