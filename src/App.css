@@ -3,62 +3,60 @@ body {
   background: #F2F2F2;
 }
 
-/* General Animations */
-.fadein-slow {
-  animation: fadein 4s;
-}
-
-.fadein-fast {
-  animation: fadein 2s;
-}
-
-@keyframes fadein {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-}
-
-/* wrappers & containers */
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
+/* container */
 .container {
   display: flex;
-  justify-content: center;
-  align-items: center;
   justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
   height: 87vh;
-  width: 90vw;  
 }
 
-@media screen and (max-width: 900px) {
-  .container {
-    flex-wrap: wrap
-  }
+footer {
+  display: flex;
+  justify-content: center;
 }
 
-@media screen and (max-width: 480px) {
-  .container {
-    flex-direction: column;
-    flex-wrap: nowrap;
-    height: 200vh;
-  }
+footer a {
+  color: #fff;
 }
 
-/* card */
+footer span {
+  font-size: 3em !important;
+  text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+  transition: .3s;
+  padding-top: 3px;
+}
+
+footer span:hover {
+  cursor: pointer;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+footer .github {
+  border-radius: 50%;
+  border: 1px solid #fff;
+  background: #6e5494;
+  width: 55px;
+  height: 55px;
+  transition: .3s;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  text-align: center;
+}
+
+footer .github:hover {
+  background: #767676;
+  box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.45);
+}
+
+/* general */
 .card {
   background-color: #FFF;
   border-radius: 3%;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   word-wrap: break-word;
   width: 215px;
-  height: 100%;
+  height: auto;
   margin-bottom: 20px;
   transition: .5s;
 }
@@ -95,58 +93,6 @@ h4 {
   color: #757575;
 }
 
-/* Loading Icon */
-.loading-wrapper, .loading {
-  display: flex;
-  align-items: center;
-  justify-content: center; 
-  flex-direction: column;
-}
-
-.loading {
-  width: 200px;
-  height: 200px;
-}
-
-.loading .background {
-  border-radius: 50%;
-  background: #6762a6;
-  border: 3px solid #c9c3e6;
-  box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.25);
-  width: 200px;  
-  height: 200px;
-  box-sizing: border-box;
-  animation: pulse-colors 2s infinite alternate linear;
-}
-
-.loading i {
-  margin: 25px 5px 5px 55px;
-  float: left;
-  font-size: 10em !important;
-  color: #fff;
-  animation: pulse-icon 2s infinite alternate linear;
-}
-
-@keyframes pulse-icon {
-    from {
-      text-shadow: 1px 2px 2px rgba(0, 0, 0, 0.25);
-    }
-    to {
-      text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.55);
-    }
-}
-
-@keyframes pulse-colors {
-    from {
-      background: #c9c3e6;
-      border: 3px solid #a29ccc;
-    }
-    to {
-      background: #6762a6;
-      border: 3px solid #c9c3e6;
-    }
-}
-
 /* Button reset */
 button {
   background: none;
@@ -156,14 +102,9 @@ button {
   font: inherit;
   cursor: pointer;
   outline: inherit;
-  margin-bottom: 20px;
 }
 
-/* Shared button styles */
-.button-wrapper {
-  height: 300px;
-}
-
+/* Common button styles */
 button {
   border-radius: 50%;
   width: 215px;
@@ -211,73 +152,4 @@ button.twitter {
 
 button.twitter:hover {
   background: #326ada;
-}
-
-/* Google */
-button.google {
-  border: 3px solid #ffffff;
-  background: #0057e7;
-}
-
-button.google:hover {
-  background: #008744;
-}
-
-/* Facebook */
-button.facebook {
-  border: 3px solid #ffffff;
-  background: #8b9dc3;
-}
-
-button.facebook:hover {
-  background: #3b5998;
-}
-
-/* Github */
-button.github {
-  border: 3px solid #ffffff;
-  background: #767676;
-}
-
-button.github:hover {
-  background: #6e5494;
-}
-
-/* footer */
-footer {
-  display: flex;
-  justify-content: flex-end;
-  width: 87vw;
-}
-
-footer a {
-  color: #fff;
-}
-
-footer span {
-  font-size: 3em !important;
-  text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
-  transition: .3s;
-  padding-top: 3px;
-}
-
-footer span:hover {
-  cursor: pointer;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-footer .small-button {
-  border-radius: 50%;
-  border: 1px solid #fff;
-  background: #6e5494;
-  width: 55px;
-  height: 55px;
-  transition: .3s;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  text-align: center;
-}
-
-footer .small-button:hover {
-  background: #767676;
-  box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.45);
 }

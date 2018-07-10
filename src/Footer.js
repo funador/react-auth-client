@@ -7,7 +7,7 @@ const Footer = () => {
       <a 
         href='https://github.com/funador/react-auth-twitter' 
         title='Github repo'
-        className={'small-button'}
+        className={'github'}
       >
         <FontAwesome
           name={'github'}
