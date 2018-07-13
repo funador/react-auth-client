@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <footer>
       <a 
-        href='https://github.com/funador/react-auth-twitter' 
+        href='https://github.com/funador/react-auth-client' 
         title='Github repo'
         className={'small-button'}
       >
