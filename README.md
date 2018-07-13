@@ -4,7 +4,8 @@
 
 ```
 git clone https://github.com/funador/react-auth-client.git
-cd react-auth
+cd react-auth-client
+npm i && HTTPS=true npm start
 ```
 
 #### Because of Facebook, https is required. Even in development. 
@@ -16,12 +17,10 @@ You will also need to manually add the https certificate to Chrome as [described
 
 I also had to open a seperate tab for https://localhost:8080 and accept the security warning before the client would push requests through.
 
-(You can thank Facebook for that!  All other providers seem to work over http in development)
+If you only want to use Twitter authentication (https is not required), follow the instructions in [this branch](https://github.com/funador/react-auth-client/tree/twitter-auth)
 
 ## Client
-``` 
-cd client && npm i && HTTPS=true npm start
-```
+
 Depending on your OS you will have to flag the HTTPS enviornment variable differently. Above is for OS X. Documentation is [here](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#using-https-in-development). 
 
 ## Server
