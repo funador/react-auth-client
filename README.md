@@ -3,12 +3,10 @@
 # Getting Started
 
 ```
-git clone https://github.com/funador/react-auth.git
-cd react-auth
+git clone https://github.com/funador/react-auth-client.git
+cd react-auth-client
 git checkout twitter-auth
 cd client && npm i && npm start
-```
-
 ```
 
 ## Server
