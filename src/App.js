@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import io from 'socket.io-client'
 import FontAwesome from 'react-fontawesome'
 import Footer from './Footer'
-import { API_URL } from './config'
 import './App.css'
+const API_URL = 'http://127.0.0.1:8080'
 const socket = io(API_URL)
 
 export default class App extends Component {
@@ -18,10 +18,10 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    fetch(`${API_URL}/wake-up-heroku`)
+    socket.on('connect', () => {
+      socket.emit('auth', socket.id)  
+    })
     
-    socket.emit('auth', 'auth')
-
     socket.on('user', user => {
       this.popup.close()
       this.setState({user})
@@ -29,7 +29,7 @@ export default class App extends Component {
   }
 
   componentWillUnmount() {
-    this.props.socket.leave(this.socketId)
+    socket.disconnect()
   }
 
   checkPopup() {
@@ -47,7 +47,7 @@ export default class App extends Component {
     const left = (window.innerWidth / 2) - (width / 2)
     const top = (window.innerHeight / 2) - (height / 2)
     
-    const url = `${API_URL}/twitter`
+    const url = `${API_URL}/twitter?socketId=${socket.id}`
 
     return window.open(url, '',       
       `toolbar=no, location=no, directories=no, status=no, menubar=no, 

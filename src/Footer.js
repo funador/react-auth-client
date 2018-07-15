@@ -1,7 +1,7 @@
 import React from 'react'
 import FontAwesome from 'react-fontawesome'
 
-const Footer = () => {
+export default () => {
   return (
     <footer>
       <a 
@@ -16,5 +16,3 @@ const Footer = () => {
     </footer>
   )
 }
-
-export default Footer
