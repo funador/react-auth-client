@@ -18,9 +18,6 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    socket.on('connect', () => {
-      socket.emit('auth', socket.id)  
-    })
     
     socket.on('user', user => {
       this.popup.close()
