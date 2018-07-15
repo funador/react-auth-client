@@ -19,7 +19,7 @@ You will also need to manually add the https certificate to Chrome as [described
 
 I also had to open a seperate tab for https://localhost:8080 and accept the security warning before the client would push requests through.
 
-If you only want to use Twitter authentication (https is not required), follow the instructions in [this branch](https://github.com/funador/react-auth-client/tree/twitter-auth)
+If you only want to use Twitter/Google/Github authentication (https is not required), follow the instructions in [this branch](https://github.com/funador/react-auth-client/tree/twitter-auth)
 
 ## Client
 
