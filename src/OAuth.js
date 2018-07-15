@@ -15,7 +15,9 @@ class OAuth extends Component {
 
   componentDidMount() {
     const { socket, provider } = this.props
-    socket.emit('auth', provider)
+    socket.on('connect', () => {
+      socket.emit('auth', socket.id)  
+    })
 
     socket.on(provider, user => {  
       this.popup.close()
