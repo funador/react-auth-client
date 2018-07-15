@@ -17,7 +17,7 @@ To add https to localhost [follow these instructions](https://medium.freecodecam
 
 You will also need to manually add the https certificate to Chrome as [described here](https://www.comodo.com/support/products/authentication_certs/setup/mac_chrome.php).
 
-I also had to open a seperate tab for https://localhost:8080 and accept the security warning before the client would push requests through.
+You may also need to open a seperate tab for https://localhost:8080 and accept the security warning before the client will push requests through.
 
 If you only want to use Twitter/Google/Github authentication (https is not required), follow the instructions in [this branch](https://github.com/funador/react-auth-client/tree/twitter-auth)
 
