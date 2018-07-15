@@ -1,6 +1,6 @@
 # React Social Authentication Client
 
-![React Social Auth](https://imgur.com/a/yNaKiAm)
+![React Social Auth](https://imgur.com/acA83LR)
 
 ## Getting Started
 
