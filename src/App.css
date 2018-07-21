@@ -246,7 +246,7 @@ button.github:hover {
 /* footer */
 footer {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   width: 87vw;
 }
 
@@ -269,7 +269,6 @@ footer span:hover {
 footer .small-button {
   border-radius: 50%;
   border: 1px solid #fff;
-  background: #6e5494;
   width: 55px;
   height: 55px;
   transition: .3s;
@@ -280,4 +279,18 @@ footer .small-button {
 footer .small-button:hover {
   background: #767676;
   box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.45);
+}
+
+footer .small-button.github {
+  background: #6e5494;
+}
+
+footer .small-button.medium {
+  background: #00ab6c;
+  font-size: 0.85em;
+}
+
+footer .small-button.medium span {
+  position: relative;
+  top: 4px;
 }
