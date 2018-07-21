@@ -18,22 +18,17 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    
     socket.on('user', user => {
       this.popup.close()
       this.setState({user})
     })
   }
 
-  componentWillUnmount() {
-    socket.disconnect()
-  }
-
   checkPopup() {
     const check = setInterval(() => {
       const { popup } = this
       if (!popup || popup.closed || popup.closed === undefined) {
-        clearInterval(check);
+        clearInterval(check)
         this.setState({ disabled: ''})
       }
     }, 1000)
@@ -53,8 +48,7 @@ export default class App extends Component {
     )
   }
 
-  startAuth(e) {
-    e.preventDefault()
+  startAuth() {
     if (!this.state.disabled) {  
       this.popup = this.openPopup()  
       this.checkPopup()
@@ -72,7 +66,9 @@ export default class App extends Component {
   
     return (
       <div className={'container'}>
-        {name 
+        {/* If there is a user, show the user */}
+        {/* Otherwise show the login button */}
+        {name
           ? <div className={'card'}>              
               <img src={photo} alt={name} />
               <FontAwesome
