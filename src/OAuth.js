@@ -2,16 +2,12 @@ import React, { Component } from 'react'
 import FontAwesome from 'react-fontawesome'
 import { API_URL } from './config'
 
-class OAuth extends Component {
+export default class OAuth extends Component {
   
-  constructor() {
-    super()
-    this.state = {
-      user: {},
-      disabled: '',
-      showing: true
-    }  
-  }
+  state = {
+    user: {},
+    disabled: ''
+  }  
 
   componentDidMount() {
     const { socket, provider } = this.props
@@ -46,9 +42,8 @@ class OAuth extends Component {
     )
   }
 
-  startAuth(e) {
+  startAuth() {
     if (!this.state.disabled) {
-      e.preventDefault()
       this.popup = this.openPopup()  
       this.checkPopup()
       this.setState({disabled: 'disabled'})
@@ -92,5 +87,3 @@ class OAuth extends Component {
     )
   }
 }
-
-export default OAuth
