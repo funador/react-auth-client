@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <footer>
       <a 
-        href='https://medium.com/p/2f6b7b0ee9d2/' 
+        href='https://medium.com/p/862d59583105' 
         title='Medium Article'
         className={'small-button medium'}
       >
