@@ -4,7 +4,7 @@
 
 ## Medium posts that detail this repo
 * [Twitter, Google, Facebook, Github version on Codeburst](https://medium.com/p/862d59583105)
-* [Twitter only version on ITNEXT](https://medium.com/p/2f6b7b0ee9d2/edit)
+* [Twitter only version on ITNEXT](https://medium.com/p/2f6b7b0ee9d2)
 
 ## Getting Started
 
