@@ -17,7 +17,7 @@ export default class App extends Component {
   componentDidMount() {
     fetch(`${API_URL}/wake-up`)
       .then(res => {
-        if(res.ok) {
+        if (res.ok) {
           return this.setState({loading: false})  
         }
       })

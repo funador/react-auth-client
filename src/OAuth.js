@@ -90,6 +90,6 @@ export default class OAuth extends Component {
 }
 
 OAuth.propTypes = {
- provider: PropTypes.string.isRequired,
- socket: PropTypes.func.isRequired
+  provider: PropTypes.string.isRequired,
+  socket: PropTypes.object.isRequired
 }
