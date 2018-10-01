@@ -43,7 +43,7 @@ export default class OAuth extends Component {
     )
   }
 
-  startAuth() {
+  startAuth = () => {
     if (!this.state.disabled) {
       this.popup = this.openPopup()  
       this.checkPopup()
@@ -75,7 +75,7 @@ export default class OAuth extends Component {
             </div>
           : <div className={'button-wrapper fadein-fast'}>
               <button 
-                onClick={this.startAuth.bind(this)} 
+                onClick={this.startAuth} 
                 className={`${provider} ${disabled} button`}
               >
                 <FontAwesome
