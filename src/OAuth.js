@@ -69,7 +69,7 @@ export default class OAuth extends Component {
               <FontAwesome
                 name={'times-circle'}
                 className={'close'}
-                onClick={this.closeCard)}
+                onClick={this.closeCard}
               />
               <h4>{`${atSymbol}${name}`}</h4>
             </div>
