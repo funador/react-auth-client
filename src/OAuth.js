@@ -23,7 +23,7 @@ export default class OAuth extends Component {
     const check = setInterval(() => {
       const { popup } = this
       if (!popup || popup.closed || popup.closed === undefined) {
-        clearInterval(check);
+        clearInterval(check)
         this.setState({ disabled: ''})
       }
     }, 1000)
