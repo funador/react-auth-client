@@ -14,17 +14,17 @@ cd react-auth-client
 npm i && HTTPS=true npm start
 ```
 
-#### Because of Facebook, https is required. Even in development. 
+### Because of Facebook, https is required. Even in development. 
 Facebook requires all apps interacting with their api (including those in development) to be served over https.  This means you will need to run create-react-app in https mode. Plus set up certificates for your server. Go ahead and get yourself a cup of coffee. This could take a minute.
 
-##### OS X
+#### OS X
 To add https to localhost [follow these instructions](https://medium.freecodecamp.org/how-to-get-https-working-on-your-local-development-environment-in-5-minutes-7af615770eec) (OS X).
 
 You will also need to manually add the https certificate to Chrome as [described here](https://www.comodo.com/support/products/authentication_certs/setup/mac_chrome.php).
 
 You may also need to open a seperate tab for https://localhost:8080 and accept the security warning before the client will push requests through.
 
-##### Windows
+#### Windows
 Thanks to [Le Gui PPF](https://medium.com/@guillaume.bottius) for providing the following instructions for setting up SSL locally on Windows:
 
 "Hi thanks for the code ! I haven’t tried it yet cause I spent a whole day (hot minute huh !) figuring out how to generate proper ssl certificate with all Chrome requirements… for those who don’t want to lose their time => [https://serverfault.com/a/850961](https://serverfault.com/a/850961) and add:
