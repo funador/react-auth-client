@@ -27,7 +27,7 @@ If you only want to use Twitter/Google/Github authentication (https is not requi
 
 ## Client
 
-Depending on your OS you will have to flag the HTTPS enviornment variable differently. Above is for OS X. Documentation is [here](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#using-https-in-development). 
+Depending on your OS you will have to flag the HTTPS enviornment variable differently. Above is for OS X. Documentation is [here](https://facebook.github.io/create-react-app/docs/using-https-in-development). 
 
 ## Server
 
