@@ -34,8 +34,8 @@ export default class App extends Component {
       )
     
     return (
-      <div className={'wrapper'}>
-        <div className={'container'}>
+      <div className='wrapper'>
+        <div className='container'>
           {this.state.loading
             ? <Loading />
             : buttons(providers, socket)
