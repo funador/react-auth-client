@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default () => (
+export default () =>
   <div className={'loading-wrapper fadein-slow'}>
     <h4>Heroku is spinning up, one moment please...</h4>
     <div className={'loading'}>
@@ -10,4 +10,3 @@ export default () => (
       <div className={'spinner'} />
     </div>
   </div>
-)
