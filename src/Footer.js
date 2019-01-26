@@ -6,19 +6,19 @@ export default () => (
     <a 
       href='https://medium.com/p/862d59583105' 
       title='Medium Article'
-      className={'small-button medium'}
+      className='small-button medium'
     >
       <FontAwesome
-        name={'medium'}
+        name='medium'
       />
     </a>
     <a 
       href='https://github.com/funador/react-auth-client' 
       title='Github repo'
-      className={'small-button github'}
+      className='small-button github'
     >
       <FontAwesome
-        name={'github'}
+        name='github'
       />
     </a>
   </footer>
