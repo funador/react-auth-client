@@ -64,16 +64,16 @@ export default class OAuth extends Component {
     return (
       <div>
         {name
-          ? <div className={'card'}>              
+          ? <div className='card'> 
               <img src={photo} alt={name} />
               <FontAwesome
-                name={'times-circle'}
-                className={'close'}
+                name='times-circle'
+                className='close'
                 onClick={this.closeCard}
               />
               <h4>{`${atSymbol}${name}`}</h4>
             </div>
-          : <div className={'button-wrapper fadein-fast'}>
+          : <div className='button-wrapper fadein-fast'>
               <button 
                 onClick={this.startAuth} 
                 className={`${provider} ${disabled} button`}
