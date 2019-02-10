@@ -18,7 +18,7 @@ export default class App extends Component {
     fetch(`${API_URL}/wake-up`)
       .then(res => {
         if (res.ok) {
-          return this.setState({loading: false})  
+          this.setState({ loading: false })  
         }
       })
   }
