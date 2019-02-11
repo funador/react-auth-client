@@ -6,16 +6,15 @@ import { API_URL } from './config'
 export default class OAuth extends Component {
   
   state = {
-    user: {},
     disabled: ''
   }  
 
   componentDidMount() {
     const { socket, provider } = this.props
 
-    socket.on(provider, user => {  
+    socket.on(provider, authToken => {  
       this.popup.close()
-      this.setState({user})
+      this.props.addAllAuthData(authToken)
     })
   }
 
@@ -52,11 +51,17 @@ export default class OAuth extends Component {
   }
 
   closeCard = () => {
-    this.setState({user: {}})
+    const { provider } = this.props
+    this.props.closeCard(provider)
   }
 
   render() {
-    const { name, photo} = this.state.user
+    let name, photo
+    if (this.props.authData) {
+      name = this.props.authData.name
+      photo = this.props.authData.photo
+    }
+    
     const { provider } = this.props
     const { disabled } = this.state
     const atSymbol = provider === 'twitter' ? '@' : ''

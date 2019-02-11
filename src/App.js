@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import io from 'socket.io-client'
+import jwtDecode from 'jwt-decode'
 import OAuth from './OAuth'
 import Loading from './Loading'
 import Footer from './Footer'
@@ -11,16 +12,70 @@ const providers = ['twitter', 'google', 'facebook', 'github']
 export default class App extends Component {
   
   state = {
-    loading: true
+    loading: true,
+    authData: {}
   }
 
-  componentDidMount() {
+  wakeUp = () => 
     fetch(`${API_URL}/wake-up`)
       .then(res => {
         if (res.ok) {
-          this.setState({ loading: false })  
+          return this.setState({ loading: false })  
         }
       })
+  
+  refreshToken = authToken => 
+    fetch(`${API_URL}/refresh`, {
+      headers: {
+        Authorization: `Bearer ${authToken}`
+      }
+    })
+      .then(res => res.json())
+      .then(authToken => {
+        localStorage.setItem('authToken', authToken)
+        const authData = jwtDecode(authToken).user
+        this.setState({ authData })
+      })
+
+  componentDidMount() {
+    this.wakeUp()
+      .then(() => {
+        const authToken = localStorage.getItem('authToken')
+        
+        if (authToken) {
+          this.refreshToken(authToken)
+        }
+      })
+  }
+
+  addAllAuthData = authToken => {
+    localStorage.setItem('authToken', authToken)
+    const authData = jwtDecode(authToken).user
+    this.setState({ authData })
+  }
+
+  closeCard = provider => {
+    const authToken = localStorage.getItem('authToken')
+
+    fetch(`${API_URL}/unlink/${provider}`, {
+      method: 'delete',
+      headers: {
+        Authorization: `Bearer ${authToken}`
+      }
+    })
+      .then(() => {
+        this.setState({
+          authData: {
+            ...this.state.authData,
+            [provider]: {}
+          }
+        })
+      })
+  }
+
+  logout = () => {
+    localStorage.removeItem('authToken')
+    this.setState({ authData: {} })
   }
 
   render() {
@@ -30,6 +85,9 @@ export default class App extends Component {
           provider={provider}
           key={provider}
           socket={socket}
+          authData={this.state.authData[provider]}
+          addAllAuthData={this.addAllAuthData}
+          closeCard={this.closeCard}
         />
       )
     
@@ -41,6 +99,7 @@ export default class App extends Component {
             : buttons(providers, socket)
           }
         </div>
+        <button onClick={this.logout}>log out</button>
         <Footer />
       </div>
     )
