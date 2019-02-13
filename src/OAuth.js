@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import FontAwesome from 'react-fontawesome'
-import { popupCenter } from './utils'
+import { notify } from 'react-notify-toast'
+import { launchPopup } from './utils'
 import { API_URL } from './config'
 
 export default class OAuth extends Component {
@@ -17,6 +18,11 @@ export default class OAuth extends Component {
       this.popup.close()
       this.props.addAllAuthData(authToken)
     })
+
+    socket.on(`${provider}-error`, msg => {
+      this.popup.close()
+      notify.show(msg)
+    })
   }
 
   checkPopup() {
@@ -30,23 +36,10 @@ export default class OAuth extends Component {
   }
 
   openPopup() {
-    console.log('innerHeight', window.innerHeight)
-    console.log('innerWidth', window.innerWidth)
-    console.log('screen', window.screen)
-
     const { provider, socket } = this.props
-    const width = 600, height = 600
-    const left = (window.screen.width / 2) - width
-    const top = (window.screen.height / 2) - height
     const url = `${API_URL}/${provider}?socketId=${socket.id}`
 
-    return popupCenter(url, 600, 600)
-
-    // return window.open(url, '',       
-    //   `toolbar=no, location=no, directories=no, status=no, menubar=no, 
-    //   scrollbars=no, resizable=no, copyhistory=no, width=${width}, 
-    //   height=${height}, top=${top}, left=${left}`
-    // )
+    return launchPopup(url, 600, 600)
   }
 
   startAuth = () => {

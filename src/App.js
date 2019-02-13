@@ -3,6 +3,7 @@ import io from 'socket.io-client'
 import jwtDecode from 'jwt-decode'
 import OAuth from './OAuth'
 import Loading from './Loading'
+import Header from './Header'
 import Footer from './Footer'
 import api from './api'
 import { API_URL } from './config'
@@ -17,8 +18,8 @@ export default class App extends Component {
     authData: {}
   }
   
-  refresh = () => {
-    api.refreshToken()
+  refreshToken = () => {
+    api.refresh()
       .then(authToken => {
         localStorage.setItem('authToken', authToken)
         const authData = jwtDecode(authToken).user
@@ -32,18 +33,16 @@ export default class App extends Component {
     }
 
   componentDidMount() {
-    api.wakeUp()
-      .then(() => {
-        this.setState({ loading: false })  
-        const authToken = localStorage.getItem('authToken')
-        
-        if (authToken) {
-          this.refresh(authToken)
-        }
-      })
-    
-    socket.on('error', msg => {
-      console.log(msg)
+    socket.on('connect', () => {
+      api.wakeUp(socket.id)
+        .then(() => {
+          this.setState({ loading: false })  
+          const authToken = localStorage.getItem('authToken')
+          
+          if (authToken) {
+            this.refreshToken(authToken)
+          }
+        })
     })
   }
 
@@ -66,8 +65,11 @@ export default class App extends Component {
   }
 
   logout = () => {
-    localStorage.removeItem('authToken')
-    this.setState({ authData: {} })
+    api.logout()
+      .then(() => {
+        localStorage.removeItem('authToken')
+        this.setState({ authData: {} })
+      })
   }
 
   render() {
@@ -85,14 +87,17 @@ export default class App extends Component {
     
     return (
       <div className='wrapper'>
+        <Header 
+          email={this.state.authData.email} 
+          logout={this.logout}
+          showLogout={Object.keys(this.state.authData).length} 
+        />
         <div className='container'>
           {this.state.loading
             ? <Loading />
             : buttons(providers, socket)
           }
         </div>
-        <div>{this.state.authData.email}</div>
-        <button onClick={this.logout}>log out</button>
         <Footer />
       </div>
     )

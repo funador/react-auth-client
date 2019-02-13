@@ -2,18 +2,21 @@ import { API_URL } from './config'
 
 export default {
   
-  wakeUp: () => {
-    return fetch(`${API_URL}/wake-up`)
+  wakeUp: socketId => {
+    return fetch(`${API_URL}/wake-up?socketId=${socketId}`, {
+      credentials: 'include'
+    })
       .then(res => res.ok)
   },
 
-  refreshToken: () => {
+  refresh: () => {
     const authToken = localStorage.getItem('authToken')
 
     return fetch(`${API_URL}/refresh`, {
       headers: {
         Authorization: `Bearer ${authToken}`
-      }
+      },
+      credentials: 'include'
     })
     .then(res => res.json())
   },
@@ -25,8 +28,20 @@ export default {
       method: 'delete',
       headers: {
         Authorization: `Bearer ${authToken}`
-      }
+      },
+      credentials: 'include'
     })
+  },
+
+  logout: () => {
+    const authToken = localStorage.getItem('authToken')
+
+    return fetch(`${API_URL}/logout`, {
+      headers: {
+        Authorization: `Bearer ${authToken}`
+      },
+      credentials: 'include'
+    })
+      .then(res => res.ok)
   }
-  
 } 

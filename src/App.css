@@ -86,6 +86,8 @@ body {
 
 img {
   width: 215px;
+  height: 215px;
+  background:#cecece;
   border-radius: 3% 3% 0 0;
 }
 
@@ -241,6 +243,17 @@ button.github {
 
 button.github:hover {
   background: #6e5494;
+}
+
+/* Header */
+header {
+  display: flex;
+  height: 30px;
+}
+
+header button {
+  width: 30px;
+  height: 30px
 }
 
 /* footer */
