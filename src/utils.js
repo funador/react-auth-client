@@ -22,3 +22,30 @@ export const launchPopup = (url, w, h) => {
   )
 
 }
+
+export const setToken = authToken => {
+  try {
+    localStorage.setItem('authToken', authToken)
+  }
+  catch (err) {
+    console.log(err)
+  }
+}
+
+export const getToken = () => {
+  try {
+    return localStorage.getItem('authToken')
+  }
+  catch (err) {
+    console.log(err)
+  }
+}
+
+export const removeToken = () => {
+  try {
+    localStorage.removeItem('authToken')
+  }
+  catch (err) {
+    console.log(err)
+  }
+}

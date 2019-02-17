@@ -8,6 +8,7 @@ export default props =>
       ? ( <>
             <div>Welcome {props.email}</div>
             <button onClick={props.logout}>log out</button>
+            <button onClick={props.deleteAccount}>close account</button>
           </>
         )
       : ''

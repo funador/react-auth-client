@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import io from 'socket.io-client'
 import jwtDecode from 'jwt-decode'
+import { notify } from 'react-notify-toast'
 import OAuth from './OAuth'
 import Loading from './Loading'
 import Header from './Header'
 import Footer from './Footer'
 import api from './api'
 import { API_URL } from './config'
+import { setToken, getToken, removeToken } from './utils'
 import './App.css'
 const socket = io(API_URL)
 const providers = ['twitter', 'google', 'facebook', 'github']
@@ -21,14 +23,14 @@ export default class App extends Component {
   refreshToken = () => {
     api.refresh()
       .then(authToken => {
-        localStorage.setItem('authToken', authToken)
+        setToken(authToken)
         const authData = jwtDecode(authToken).user
         this.setState({ authData })
       })
       .catch(err => {
         console.log(err)
         // pop up to say something is wrong
-        localStorage.removeItem('authToken')
+        removeToken()
       })
     }
 
@@ -37,7 +39,7 @@ export default class App extends Component {
       api.wakeUp(socket.id)
         .then(() => {
           this.setState({ loading: false })  
-          const authToken = localStorage.getItem('authToken')
+          const authToken = getToken()
           
           if (authToken) {
             this.refreshToken(authToken)
@@ -52,6 +54,16 @@ export default class App extends Component {
     this.setState({ authData })
   }
 
+  addProviderData = (provider, providerData, email) => {
+    this.setState({
+      authData: {
+        ...this.state.authData,
+        [provider]: providerData,
+        email
+      }
+    })
+  }
+
   closeCard = provider => {
     api.unlink(provider)
       .then(() => {
@@ -64,15 +76,27 @@ export default class App extends Component {
       })
   }
 
+  removeAuthData = msg => {
+    removeToken()
+    this.setState({ authData: {} })
+    notify.show(msg)
+  }
+
   logout = () => {
     api.logout()
       .then(() => {
-        localStorage.removeItem('authToken')
-        this.setState({ authData: {} })
+        this.removeAuthData('You have been logged out')
       })
   }
 
-  render() {
+  deleteAccount = () => {
+    api.deleteAccount()
+      .then(() => {
+        this.removeAuthData('Your account has been deleted')
+      })
+  }
+
+  render = () => {
     const buttons = (providers, socket) => 
       providers.map(provider => 
         <OAuth 
@@ -80,16 +104,17 @@ export default class App extends Component {
           key={provider}
           socket={socket}
           authData={this.state.authData[provider]}
-          addAllAuthData={this.addAllAuthData}
+          addProviderData={this.addProviderData}
           closeCard={this.closeCard}
         />
       )
-    
+      
     return (
       <div className='wrapper'>
         <Header 
           email={this.state.authData.email} 
           logout={this.logout}
+          deleteAccount={this.deleteAccount}
           showLogout={Object.keys(this.state.authData).length} 
         />
         <div className='container'>

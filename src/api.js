@@ -43,5 +43,18 @@ export default {
       credentials: 'include'
     })
       .then(res => res.ok)
+  },
+
+  deleteAccount: () => {
+    const authToken = localStorage.getItem('authToken')
+
+    return fetch(`${API_URL}/delete-account`, {
+      method: 'delete',
+      headers: {
+        Authorization: `Bearer ${authToken}`
+      },
+      credentials: 'include'
+    })
+      .then(res => res.ok)
   }
 } 

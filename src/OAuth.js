@@ -11,12 +11,12 @@ export default class OAuth extends Component {
     disabled: ''
   }  
 
-  componentDidMount() {
+  componentDidMount = () => {
     const { socket, provider } = this.props
 
-    socket.on(provider, authToken => {  
+    socket.on(provider, ({ providerData, email }) => {  
       this.popup.close()
-      this.props.addAllAuthData(authToken)
+      this.props.addProviderData(provider, providerData, email)
     })
 
     socket.on(`${provider}-error`, msg => {
@@ -25,7 +25,7 @@ export default class OAuth extends Component {
     })
   }
 
-  checkPopup() {
+  checkPopup = () => {
     const check = setInterval(() => {
       const { popup } = this
       if (!popup || popup.closed || popup.closed === undefined) {
@@ -35,7 +35,7 @@ export default class OAuth extends Component {
     }, 1000)
   }
 
-  openPopup() {
+  openPopup = () => {
     const { provider, socket } = this.props
     const url = `${API_URL}/${provider}?socketId=${socket.id}`
 
@@ -50,9 +50,11 @@ export default class OAuth extends Component {
     }
   }
 
-  render() {
+  render = () => {
     let name, photo
-    if (this.props.authData) {
+    const { authData } = this.props
+
+    if (authData) {
       name = this.props.authData.name
       photo = this.props.authData.photo
     }
@@ -63,11 +65,11 @@ export default class OAuth extends Component {
     
     return (
       <div>
-        {name
+        {authData
           ? <div className='card'> 
               <img src={photo} alt={name} />
               <FontAwesome
-                name='times-circle'
+                name='unlink'
                 className='close'
                 onClick={() => this.props.closeCard(provider)}
               />
