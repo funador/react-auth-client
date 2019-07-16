@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import io from 'socket.io-client'
 import OAuth from './OAuth'
 import Loading from './Loading'
@@ -8,41 +8,38 @@ import './App.css'
 const socket = io(API_URL)
 const providers = ['twitter', 'google', 'facebook', 'github']
 
-export default class App extends Component {
+export default function App() {
   
-  state = {
-    loading: true
-  }
+  const [loading, setLoading] = useState(true);
 
-  componentDidMount() {
+
+  useEffect(() => {
     fetch(`${API_URL}/wake-up`)
       .then(res => {
         if (res.ok) {
-          this.setState({ loading: false })  
+          setLoading(false)  
         }
       })
-  }
+  });
 
-  render() {
-    const buttons = (providers, socket) => 
-      providers.map(provider => 
-        <OAuth 
-          provider={provider}
-          key={provider}
-          socket={socket}
-        />
-      )
-    
-    return (
-      <div className='wrapper'>
-        <div className='container'>
-          {this.state.loading
-            ? <Loading />
-            : buttons(providers, socket)
-          }
-        </div>
-        <Footer />
-      </div>
+  const buttons = (providers, socket) => 
+    providers.map(provider => 
+      <OAuth 
+        provider={provider}
+        key={provider}
+        socket={socket}
+      />
     )
-  }
+  
+  return (
+    <div className='wrapper'>
+      <div className='container'>
+        {loading
+          ? <Loading />
+          : buttons(providers, socket)
+        }
+      </div>
+      <Footer />
+    </div>
+  )
 }

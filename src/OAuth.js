@@ -1,36 +1,33 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { useState, useEffect } from 'react'
 import FontAwesome from 'react-fontawesome'
 import { API_URL } from './config'
 
-export default class OAuth extends Component {
-  
-  state = {
-    user: {},
-    disabled: ''
-  }  
+export default function OAuth(props) {
 
-  componentDidMount() {
-    const { socket, provider } = this.props
+  const [user, setUser] = useState({});
+  const [disabled, setDisabled] = useState('');
+  let popup = null;
+
+  useEffect(() => {
+    const { socket, provider } = props
 
     socket.on(provider, user => {  
-      this.popup.close()
-      this.setState({user})
+      popup.close()
+      setUser(user)
     })
-  }
+  }, [popup]);
 
-  checkPopup() {
+  const checkPopup = () => {
     const check = setInterval(() => {
-      const { popup } = this
       if (!popup || popup.closed || popup.closed === undefined) {
         clearInterval(check)
-        this.setState({ disabled: ''})
+        setDisabled('')
       }
     }, 1000)
   }
 
-  openPopup() {
-    const { provider, socket } = this.props
+  const openPopup = () => {
+    const { provider, socket } = props
     const width = 600, height = 600
     const left = (window.innerWidth / 2) - (width / 2)
     const top = (window.innerHeight / 2) - (height / 2)
@@ -43,53 +40,45 @@ export default class OAuth extends Component {
     )
   }
 
-  startAuth = () => {
-    if (!this.state.disabled) {
-      this.popup = this.openPopup()  
-      this.checkPopup()
-      this.setState({disabled: 'disabled'})
+  const startAuth = () => {
+    if (!disabled) {
+      popup = openPopup()
+      checkPopup()
+      setDisabled('disabled')
     }
   }
 
-  closeCard = () => {
-    this.setState({user: {}})
+  const closeCard = () => {
+    setUser({})
   }
 
-  render() {
-    const { name, photo} = this.state.user
-    const { provider } = this.props
-    const { disabled } = this.state
-    const atSymbol = provider === 'twitter' ? '@' : ''
-    
-    return (
-      <div>
-        {name
-          ? <div className='card'> 
-              <img src={photo} alt={name} />
+  const { name, photo} = user
+  const { provider } = props
+  const atSymbol = provider === 'twitter' ? '@' : ''
+  
+  return (
+    <div>
+      {name
+        ? <div className='card'> 
+            <img src={photo} alt={name} />
+            <FontAwesome
+              name='times-circle'
+              className='close'
+              onClick={closeCard}
+            />
+            <h4>{`${atSymbol}${name}`}</h4>
+          </div>
+        : <div className='button-wrapper fadein-fast'>
+            <button 
+              onClick={startAuth} 
+              className={`${provider} ${disabled} button`}
+            >
               <FontAwesome
-                name='times-circle'
-                className='close'
-                onClick={this.closeCard}
+                name={provider}
               />
-              <h4>{`${atSymbol}${name}`}</h4>
-            </div>
-          : <div className='button-wrapper fadein-fast'>
-              <button 
-                onClick={this.startAuth} 
-                className={`${provider} ${disabled} button`}
-              >
-                <FontAwesome
-                  name={provider}
-                />
-              </button>
-            </div>
-        }
-      </div>
-    )
-  }
-}
-
-OAuth.propTypes = {
-  provider: PropTypes.string.isRequired,
-  socket: PropTypes.object.isRequired
+            </button>
+          </div>
+      }
+    </div>
+  )
 }
