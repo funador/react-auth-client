@@ -1,23 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
+import io from 'socket.io-client'
 import FontAwesome from 'react-fontawesome'
 import { API_URL } from './config'
+const socket = io(API_URL, {
+  autoConnect: false
+})
 
 export default function OAuth(props) {
+	
+  const [user, setUser] = useState({})
+  const [disabled, setDisabled] = useState('')
 
-  const [user, setUser] = useState({});
-  const [disabled, setDisabled] = useState('');
-  let popup = null;
-
-  useEffect(() => {
-    const { socket, provider } = props
-
-    socket.on(provider, user => {  
-      popup.close()
-      setUser(user)
-    })
-  }, [popup]);
-
-  const checkPopup = () => {
+  const checkPopup = (popup) => {
     const check = setInterval(() => {
       if (!popup || popup.closed || popup.closed === undefined) {
         clearInterval(check)
@@ -26,36 +20,69 @@ export default function OAuth(props) {
     }, 1000)
   }
 
-  const openPopup = () => {
-    const { provider, socket } = props
+  const openBlankPopup = () => {
     const width = 600, height = 600
     const left = (window.innerWidth / 2) - (width / 2)
     const top = (window.innerHeight / 2) - (height / 2)
-    const url = `${API_URL}/${provider}?socketId=${socket.id}`
-
-    return window.open(url, '',       
+    const newWindow = window.open("about:blank", '',       
       `toolbar=no, location=no, directories=no, status=no, menubar=no, 
       scrollbars=no, resizable=no, copyhistory=no, width=${width}, 
-      height=${height}, top=${top}, left=${left}`
-    )
+      height=${height}, top=${top}, left=${left}`)
+
+    return newWindow
+  }
+
+const connectToSocketAndSetPopupLocation = (popup) => {
+
+    const { provider } = props
+    socket.connect()
+    // wait for socket to be connected to be sure that socket.id is available
+    socket.on('connect', () => {
+      // wait for popup to be opened because sometimes it won't be in time
+      const checkPopup = window.setInterval(() => {
+        if (popup && !popup.closed) {
+          console.log(popup.closed)
+          // we need to do it this way because when we would try to open a new window inside this callback
+          // it would be blocked by popup blocker. As workaround we change the location of the blank popup here
+          const url = `${API_URL}/${provider}?socketId=${socket.id}`
+          popup.location.href = url
+          clearInterval(checkPopup)
+        } 
+      }, 50)
+    })
+
   }
 
   const startAuth = () => {
+
+    const { provider } = props
+    let popup = null
+    
     if (!disabled) {
-      popup = openPopup()
-      checkPopup()
+
+      popup = openBlankPopup()
+      connectToSocketAndSetPopupLocation(popup)
+      checkPopup(popup)
       setDisabled('disabled')
+
+      socket.on(provider, user => {
+        popup.close()
+        setUser(user)
+        socket.close()
+      })
     }
+
   }
 
   const closeCard = () => {
     setUser({})
   }
 
+
   const { name, photo} = user
   const { provider } = props
   const atSymbol = provider === 'twitter' ? '@' : ''
-  
+
   return (
     <div>
       {name
