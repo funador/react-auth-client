@@ -7,7 +7,7 @@ import { API_URL } from './config'
 import './App.css'
 
 const socket = io(API_URL, { transports: ['websocket'] })
-const providers = ['twitter', 'google', 'facebook', 'github']
+const providers = ['twitter', 'google', 'github']
 
 interface AppState {
   loading: boolean
