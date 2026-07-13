@@ -2,58 +2,56 @@
 
 ![React Social Auth](https://i.imgur.com/acA83LR.gif)
 
+Client half of a decoupled OAuth setup for React: clicking a provider button opens a popup to the server, which does the actual OAuth dance and pushes the authenticated profile back here over a socket. Written in TypeScript.
+
+## Demo
+
+[Live demo](https://react-multi-auth.vercel.app)
+
 ## Medium posts that detail this repo
 * [Twitter, Google, Facebook, Github version on Codeburst](https://medium.com/p/862d59583105)
-* [Twitter only version on ITNEXT](https://medium.com/p/2f6b7b0ee9d2) 
+* [Twitter only version on ITNEXT](https://medium.com/p/2f6b7b0ee9d2)
 
 ## Getting Started
 
-```
+```shell
 git clone https://github.com/funador/react-auth-client.git
 cd react-auth-client
 npm i && HTTPS=true npm start
 ```
 
-### Because of Facebook, https is required. Even in development. 
-Facebook requires all apps interacting with their api (including those in development) to be served over https.  This means you will need to run create-react-app in https mode. Plus set up certificates for your server. Go ahead and get yourself a cup of coffee. This could take a minute.
+### Because of Facebook, HTTPS is required locally
 
-#### OS X
-To add https to localhost [follow these instructions](https://medium.freecodecamp.org/how-to-get-https-working-on-your-local-development-environment-in-5-minutes-7af615770eec).
+Facebook requires every app talking to its API — including apps in development — to be served over HTTPS.
 
-You will also need to manually add the https certificate to Chrome as [described here](https://www.comodo.com/support/products/authentication_certs/setup/mac_chrome.php).
+#### macOS
+To add HTTPS to localhost, [follow these instructions](https://medium.freecodecamp.org/how-to-get-https-working-on-your-local-development-environment-in-5-minutes-7af615770eec), then manually trust the cert in Chrome as [described here](https://www.comodo.com/support/products/authentication_certs/setup/mac_chrome.php).
 
-You may also need to open a seperate tab for https://localhost:8080 and accept the security warning before the client will push requests through.
+You may also need to open a separate tab for `https://localhost:8080` and accept the security warning before the client will push requests through.
 
 #### Windows
-Thanks to [Le Gui PPF](https://medium.com/@guillaume.bottius) for providing the following instructions for setting up SSL locally on Windows:
+Thanks to [Le Gui PPF](https://medium.com/@guillaume.bottius) for these SSL-on-Windows instructions:
 
-"Hi thanks for the code ! I haven’t tried it yet cause I spent a whole day (hot minute huh !) figuring out how to generate proper ssl certificate with all Chrome requirements… for those who don’t want to lose their time => [https://serverfault.com/a/850961](https://serverfault.com/a/850961) and add:
+> I spent a whole day figuring out how to generate a proper SSL certificate with all Chrome's requirements — see [this answer](https://serverfault.com/a/850961) and add the following to the v3 req section:
+>
+> ```
+> authorityKeyIdentifier=keyid,issuer
+> basicConstraints=CA:FALSE
+> keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+> ```
 
-```
-echo authorityKeyIdentifier=keyid,issuer
-echo basicConstraints=CA:FALSE
-echo keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
-```
-
-to v3 req.
-
-Hope that works for you Windows folks!
-
-If you only want to use Twitter/Google/Github authentication (https is not required), follow the instructions in [this branch](https://github.com/funador/react-auth-client/tree/twitter-auth)
-
-## Client
-
-Depending on your OS you will have to flag the HTTPS enviornment variable differently. Documentation for different operating systems is [here](https://facebook.github.io/create-react-app/docs/using-https-in-development). 
+If you only want Twitter/Google/Github authentication (no HTTPS hassle), use [the twitter-auth branch](https://github.com/funador/react-auth-client/tree/twitter-auth) instead.
 
 ## Server
 
-Follow the instructions in the [server repo](https://github.com/funador/react-auth-server)
+This client just talks to a socket + a few OAuth routes — there's no client-side provider setup. Follow the instructions in the [server repo](https://github.com/funador/react-auth-server) to register each provider and get the server running.
 
-Finally open https://localhost:3000
+Once the server's reachable, open `https://localhost:3000`.
 
-#### Deploy
-Everything is set up to deploy to Netlify. You just need to `npm run build` on the client and deploy to netlify.
+### Deploy
+
+Deployed on Vercel, pointed at the deployed server via `API_URL` in `src/config.ts`.
 
 ### Issues
 
-Something not working?  Please [open an issue](https://github.com/funador/react-auth-client/issues)
+Something not working? Please [open an issue](https://github.com/funador/react-auth-client/issues) or submit a PR.
