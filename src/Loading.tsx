@@ -1,12 +1,13 @@
 import React from 'react'
 
-export default () =>
+const Loading = () =>
   <div className='loading-wrapper fadein-slow'>
-    <h4>Heroku is spinning up, one moment please...</h4>
+    <h4>Warming up the server, one moment please...</h4>
     <div className='loading'>
-      <div className='background'>
-        <i className='icon-heroku'></i>
-      </div>
-      <div className='spinner' />
+      <svg className='vercel-glow' viewBox='0 0 76 65' fill='none' xmlns='http://www.w3.org/2000/svg'>
+        <path d='M37.5274 0L75.0548 65H0L37.5274 0Z' />
+      </svg>
     </div>
   </div>
+
+export default Loading
